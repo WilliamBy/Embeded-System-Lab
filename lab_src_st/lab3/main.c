@@ -35,8 +35,8 @@ int* main(int argc, char *argv[])
 	fb_update();
 	fb_free_image(img);
 
-	fb_draw_text(50,50,"床前明月光，疑是地上霜。",64,PURPLE);
-	fb_draw_text(50,120,"举头望明月，低头思故乡。",64,PURPLE);
+	fb_draw_text(50,50,"床前明月光，疑是地上霜。",42,PURPLE);
+	fb_draw_text(50,120,"举头望明月，低头思故乡。",42,PURPLE);
 	fb_update();
 	return 0;
 }

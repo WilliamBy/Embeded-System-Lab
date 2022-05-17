@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue May 17 14:31:02 2022
+# Make data base, printed on Tue May 17 21:11:01 2022
 
 # Variables
 
@@ -63,7 +63,7 @@ VSCODE_PIPE_LOGGING = true
 # environment
 PWD = /home/ubuntu/Embeded-System-Lab
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-ff20b6e6-e4d8-45cd-bd5d-b8b51ab42b47.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-033ccadc-ceca-4ce2-adfd-7a9c0f96414d.sock
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -187,6 +187,9 @@ Makefile:
 makefile:
 #  Implicit rule search has been done.
 #  File does not exist.
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 #  File has been updated.
 #  Failed to be updated.
 
@@ -198,9 +201,6 @@ makefile:
 
 # Not a target:
 GNUmakefile:
- 
-make: *** No rule to make target 'all'.  Stop.
-
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
@@ -220,6 +220,6 @@ make: *** No rule to make target 'all'.  Stop.
 # strcache performance: lookups = 18 / hit rate = 16%
 # hash-table stats:
 # Load=15/8192=0%, Rehash=0, Collisions=1/18=6%
-# Finished Make data base on Tue May 17 14:31:02 2022
+# Finished Make data base on Tue May 17 21:11:01 2022
 
  
