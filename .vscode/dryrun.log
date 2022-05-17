@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/ubuntu/Embeded-System-Lab'
+make: Leaving directory '/home/ubuntu/Embeded-System-Lab'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+

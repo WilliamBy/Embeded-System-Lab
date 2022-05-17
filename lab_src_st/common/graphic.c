@@ -152,17 +152,34 @@ void fb_draw_rect(int x, int y, int w, int h, int color)
 	if(w<=0 || h<=0) return;
 	int *buf = _begin_draw(x,y,w,h);
 /*---------------------------------------------------*/
-	printf("you need implement fb_draw_rect()\n"); exit(0);
+	// printf("you need implement fb_draw_rect()\n"); exit(0);
 	// Add your code here
-/*---------------------------------------------------*/
+	for (int yy = 0; yy < h; yy++)
+	{
+		for (int xx = 0; xx < w; xx++)
+		{
+			*(buf + (y + yy) * SCREEN_WIDTH + (x + xx)) = color;
+		}
+	}
+	/*---------------------------------------------------*/
 	return;
 }
 
 void fb_draw_line(int x1, int y1, int x2, int y2, int color)
 {
 /*---------------------------------------------------*/
-	printf("you need implement fb_draw_line()\n"); exit(0);
+	// printf("you need implement fb_draw_line()\n"); exit(0);
 	// Add your code here
+	// Bresenha 算法
+	int dx = abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
+    int dy = abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
+    int err = (dx > dy ? dx : -dy) / 2;
+
+    while (fb_draw_pixel(x1, y1, color), x1 != x2 || y1 != y2) {
+        int e2 = err;
+        if (e2 > -dx) { err -= dy; x1 += sx; }
+        if (e2 <  dy) { err += dx; y1 += sy; }
+    }
 /*---------------------------------------------------*/
 	return;
 }
@@ -170,8 +187,7 @@ void fb_draw_line(int x1, int y1, int x2, int y2, int color)
 void fb_draw_image(int x, int y, fb_image *image, int color)
 {
 	if(image == NULL) return;
-
-	int ix = 0; //image x
+	int ix = 0; // image x
 	int iy = 0; //image y
 	int w = image->pixel_w; //draw width
 	int h = image->pixel_h; //draw height
@@ -198,22 +214,87 @@ void fb_draw_image(int x, int y, fb_image *image, int color)
 
 	if(image->color_type == FB_COLOR_RGB_8880) /*lab3: jpg*/
 	{
-		printf("you need implement fb_draw_image() FB_COLOR_RGB_8880\n"); exit(0);
+		// printf("you need implement fb_draw_image() FB_COLOR_RGB_8880\n"); exit(0);
 		// Add your code here
+		for (ww = 0; ww < h; ++ww)
+		{
+			memcpy(dst, src, w * 4);
+			dst += SCREEN_WIDTH * 4;
+			src += image->line_byte;
+		}
 		return;
 	}
 
 	if(image->color_type == FB_COLOR_RGBA_8888) /*lab3: png*/
 	{
-		printf("you need implement fb_draw_image() FB_COLOR_RGBA_8888\n"); exit(0);
+		// printf("you need implement fb_draw_image() FB_COLOR_RGBA_8888\n"); exit(0);
 		// Add your code here
+		char R1, G1, B1, alpha;
+		char *from = src;
+		char *p = dst;
+		for (int i = 0; i < w; i++)
+		{
+			for (int j = 0; j < h; j++)
+			{
+				p = dst + j * SCREEN_WIDTH * 4 + i * 4;
+				from = src + j * image->line_byte + i * 4;
+				alpha = from[3];
+				B1 = from[0];
+				G1 = from[1];
+				R1 = from[2];
+				switch (alpha)
+				{
+				case 0:
+					break;
+				case 255:
+					p[0] = B1;
+					p[1] = G1;
+					p[2] = R1;
+					break;
+				default:
+					p[0] += (((B1 - p[0]) * alpha) >> 8);
+					p[1] += (((G1 - p[1]) * alpha) >> 8);
+					p[2] += (((R1 - p[2]) * alpha) >> 8);
+				}
+			}
+		}
 		return;
 	}
 
 	if(image->color_type == FB_COLOR_ALPHA_8) /*lab3: font*/
 	{
-		printf("you need implement fb_draw_image() FB_COLOR_ALPHA_8\n"); exit(0);
+		// printf("you need implement fb_draw_image() FB_COLOR_ALPHA_8\n"); exit(0);
 		// Add your code here
+		int line_bytes = image->line_byte;
+		char R1, G1, B1, alpha;
+		char *from = src;
+		char *p = dst;
+		for (int i = 0; i < w; i++)
+		{
+			for (int j = 0; j < h; j++)
+			{
+				p = dst + j * SCREEN_WIDTH * 4 + i * 4;
+				from = src + j * line_bytes + i;
+				alpha = *from;
+				R1 = (color & 0xff0000) >> 16;
+				G1 = (color & 0xff00) >> 8;
+				B1 = (color & 0xff);
+				switch (alpha)
+				{
+				case 0:
+					break;
+				case 255:
+					p[0] = B1;
+					p[1] = G1;
+					p[2] = R1;
+					break;
+				default:
+					p[0] += (((B1 - p[0]) * alpha) >> 8);
+					p[1] += (((G1 - p[1]) * alpha) >> 8);
+					p[2] += (((R1 - p[2]) * alpha) >> 8);
+				}
+			}
+		}
 		return;
 	}
 /*---------------------------------------------------------------*/
