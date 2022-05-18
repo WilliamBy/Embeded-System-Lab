@@ -21,9 +21,12 @@ static void touch_event_cb(int fd)
 {
 	int type,x,y,finger;
 	type = touch_read(fd, &x,&y,&finger);
-	switch(type){
+	x = ADJUST_X(x);	// transfer to screen pixel ordinate
+	y = ADJUST_Y(y);
+	switch (type)
+	{
 	case TOUCH_PRESS:
-		//printf("type=%d,x=%d,y=%d,finger=%d\n",type,x,y,finger);
+		// printf("type=%d,x=%d,y=%d,finger=%d\n",type,x,y,finger);
 		if((x>=SEND_X)&&(x<SEND_X+SEND_W)&&(y>=SEND_Y)&&(y<SEND_Y+SEND_H)) {
 			printf("bluetooth tty send hello\n");
 			myWrite_nonblock(bluetooth_fd, "hello\n", 6);

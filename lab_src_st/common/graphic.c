@@ -332,3 +332,68 @@ void fb_draw_text(int x, int y, char *text, int font_size, int color)
 	return;
 }
 
+// draw a straight line with offerd direction (1 accord with vertical and 0 with horizonal)
+void fb_draw_straight_line(int x, int y, int len, int direction, int color)
+{
+	if (direction == 1)
+	{
+		for (int yy = 0; yy < len; yy++)
+		{
+			fb_draw_pixel(x, y + yy, color);
+		}
+	}
+	else
+	{
+		for (int xx = 0; xx < len; xx++)
+		{
+			fb_draw_pixel(x + xx, y, color);
+		}
+	}
+	return;
+}
+
+// draw a round with offered radius
+void fb_draw_round(int x, int y, int r, int color)
+{
+	/*上半球*/
+	int xi = x, yi = y - r;	// 当前迭代的点
+	int offset_x = 0, offset_y = r; // 当前迭代的点到中轴线的距离
+	while(offset_y >= 0)
+	{
+		fb_draw_straight_line(xi, yi, 1 + 2 * offset_x, 0, color);
+		xi--;
+		if ((xi - x) * (xi - x) + (yi - y) * (yi - y) - r * r < 0)
+		{
+			// 下一个迭代的点位于正左方
+			offset_x++;
+		}
+		else
+		{
+			// 下一个迭代的点位于正下方
+			offset_y--;
+			xi++;
+			yi++;
+		}
+	}
+	/*下半球*/
+	xi = x, yi = y + r;	// 当前迭代的点
+	offset_x = 0, offset_y = r; // 当前迭代的点到中轴线的距离
+	while(offset_y >= 0)
+	{
+		fb_draw_straight_line(xi, yi, 1 + 2 * offset_x, 0, color);
+		xi--;
+		if ((xi - x) * (xi - x) + (yi - y) * (yi - y) - r * r < 0)
+		{
+			// 下一个迭代的点位于正左方
+			offset_x++;
+		}
+		else
+		{
+			// 下一个迭代的点位于正上方
+			offset_y--;
+			xi++;
+			yi--;
+		}
+	}
+	return;
+}

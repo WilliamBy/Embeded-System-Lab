@@ -89,6 +89,10 @@ void fb_draw_line(int sx, int sy, int dx, int dy, int color);
 void fb_draw_image(int x, int y, fb_image *image, int color);
 void fb_draw_text(int x, int y, char *text, int font_size, int color);
 
+/*w1_liamby's addon*/
+void fb_draw_straight_line(int x, int y, int len, int direction, int color);
+void fb_draw_round(int x, int y, int r, int color);
+
 /*=========================== input.c ===============================*/
 
 /*lab4*/
@@ -98,6 +102,8 @@ void fb_draw_text(int x, int y, char *text, int font_size, int color);
 #define TOUCH_RELEASE	3
 #define TOUCH_ERROR	9
 #define FINGER_NUM_MAX	5
+#define ADJUST_X(x) ((x*SCREEN_WIDTH)>>12)
+#define ADJUST_Y(y) ((y*SCREEN_HEIGHT)>>12)
 
 int touch_init(char *dev); /*返回touch_fd*/
 int touch_read(int touch_fd, int *x, int *y, int *finger);
