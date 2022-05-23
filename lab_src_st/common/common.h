@@ -92,6 +92,7 @@ void fb_draw_text(int x, int y, char *text, int font_size, int color);
 /*w1_liamby's addon*/
 void fb_draw_straight_line(int x, int y, int len, int direction, int color);
 void fb_draw_round(int x, int y, int r, int color);
+void fb_draw_thick_line(int sx, int sy, int dx, int dy, int r, int color);
 
 /*=========================== input.c ===============================*/
 

@@ -397,3 +397,28 @@ void fb_draw_round(int x, int y, int r, int color)
 	}
 	return;
 }
+
+void fb_draw_thick_line(int x1, int y1, int x2, int y2, int r, int color)
+{
+	int dx = abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
+	int dy = abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
+	int err = (dx > dy ? dx : -dy) / 2;
+
+	fb_draw_pixel(x1, y1, color);
+
+	while (x1 != x2 || y1 != y2)
+	{
+		int e2 = err;
+		if (e2 > -dx)
+		{
+			err -= dy;
+			x1 += sx;
+		}
+		if (e2 < dy)
+		{
+			err += dx;
+			y1 += sy;
+		}
+		fb_draw_round(x1, y1, r, color);
+	}
+}
