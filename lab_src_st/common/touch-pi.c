@@ -31,8 +31,6 @@ int touch_init(char *dev)
   TOUCH_MOVE
   TOUCH_RELEASE
   TOUCH_ERROR
-x: 0~4096
-y: 0~4096
 finger: 0,1,2,3,4
 */
 int touch_read(int touch_fd, int *x, int *y, int *finger)

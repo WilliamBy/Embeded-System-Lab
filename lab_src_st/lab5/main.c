@@ -21,8 +21,6 @@ static void touch_event_cb(int fd)
 {
 	int type,x,y,finger;
 	type = touch_read(fd, &x,&y,&finger);
-	x = ADJUST_X(x);	// transfer to screen pixel ordinate
-	y = ADJUST_Y(y);
 	switch (type)
 	{
 	case TOUCH_PRESS:

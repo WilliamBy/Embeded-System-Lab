@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <sys/timeb.h>
 #include "../common/common.h"
 
 #define COLOR_BACKGROUND FB_COLOR(0x0, 0x0, 0x0)
@@ -21,12 +20,6 @@ static fb_image *eraser_img;
 static fb_image *cross_img;
 static int move_num = 3;
 static int old_x, old_y;
-// long long getSystemTime()
-// {
-// 	struct timeb t;
-// 	ftime(&t);
-// 	return 1000 * t.time + t.millitm;
-// }
 void draw_ui() // draw clear button, background and refresh screen
 {
 	fb_draw_rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, COLOR_BACKGROUND);
@@ -36,11 +29,8 @@ void draw_ui() // draw clear button, background and refresh screen
 }
 static void touch_event_cb(int fd)
 {
-	// long long start = getSystemTime();
 	int type, x, y, finger;
 	type = touch_read(fd, &x, &y, &finger);
-	x = ADJUST_X(x);
-	y = ADJUST_Y(y);
 	switch (type)
 	{
 	case TOUCH_PRESS:
@@ -64,19 +54,19 @@ static void touch_event_cb(int fd)
 		}
 		break;
 	case TOUCH_MOVE:
-		if (old_x == x && old_y == y)	// 避免重复渲染
-		{
-			break;
-		}
-		else
-		{
-			old_x = x;
-			old_y = y;
-		}
-		printf("TOUCH_MOVE：x=%d,y=%d,finger=%d\n", x, y, finger);
+		// if (old_x == x && old_y == y)	// 避免重复渲染
+		// {
+		// 	break;
+		// }
+		// else
+		// {
+		// 	old_x = x;
+		// 	old_y = y;
+		// }
+		// printf("TOUCH_MOVE：x=%d,y=%d,finger=%d\n", x, y, finger);
 		if (y > BAR_H)
 		{
-			fb_draw_round(x, y, 6, color_finger[finger]);
+			fb_draw_round(x, y, 8, color_finger[finger]);
 			// fb_draw_pixel(x, y, color_finger[finger]);
 		}
 		break;
@@ -92,8 +82,6 @@ static void touch_event_cb(int fd)
 		return;
 	}
 	fb_update();
-	// long long end = getSystemTime();
-	// printf("time: %lld ms\n", end - start);
 	return;
 }
 
@@ -104,6 +92,7 @@ int main(int argc, char *argv[])
 	cross_img = fb_read_png_image("/home/pi/cross40.png");
 	eraser_img = fb_read_png_image("/home/pi/eraser40.png");
 	draw_ui();
+	fb_update();
 
 	//打开多点触摸设备文件, 返回文件fd
 	touch_fd = touch_init("/dev/input/event0");

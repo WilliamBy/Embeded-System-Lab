@@ -102,8 +102,6 @@ void fb_draw_round(int x, int y, int r, int color);
 #define TOUCH_RELEASE	3
 #define TOUCH_ERROR	9
 #define FINGER_NUM_MAX	5
-#define ADJUST_X(x) ((x*SCREEN_WIDTH)>>12)
-#define ADJUST_Y(y) ((y*SCREEN_HEIGHT)>>12)
 
 int touch_init(char *dev); /*返回touch_fd*/
 int touch_read(int touch_fd, int *x, int *y, int *finger);
