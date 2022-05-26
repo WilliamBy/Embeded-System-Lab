@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed May 18 13:39:14 2022
+# Make data base, printed on Thu May 26 11:29:38 2022
 
 # Variables
 
@@ -33,7 +33,7 @@ SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
-_ = /home/ubuntu/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/node
+_ = /home/ubuntu/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/node
 # makefile
 MAKEFILE_LIST := 
 # 'override' directive
@@ -45,7 +45,7 @@ VSCODE_CWD = /mnt/d/APPpro/VSCODE/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/ubuntu/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/bin/remote-cli:/home/ubuntu/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/e/Developer/VMwarePro/bin/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/ProgramData/chocolatey/bin:/mnt/d/APPpro/Mingw/mingw32/bin:/mnt/d/APPpro/MatLab/runtime/win64:/mnt/d/APPpro/MatLab/bin:/mnt/d/Repository/Seeds/BShell/bin:/mnt/d/APPpro/CMake/cmake-3.17.0-rc2-win64-x64/bin:/mnt/d/APPpro/MatLab/sys/extern/win64/clang/bin:/mnt/d/APPpro/make/GnuWin32/bin:/mnt/c/Users/86173/AppData/Local/Microsoft/WindowsApps:/mnt/d/APPpro/VSCODE/bin:/mnt/c/Users/86173/AppData/Roaming/npm:/mnt/d/APPpro/TexLive/texlive/2019/bin/win32:/mnt/e/Developer/Alibaba_Dragonwell/jdk8u302-b01/bin:/mnt/e/Developer/Alibaba_Dragonwell/jdk8u302-b01/jre/bin:/mnt/e/Developer/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin:/mnt/d/APPpro/Git for windows/Git/bin:/mnt/c/Program Files (x86)/DOSBox-0.74-3:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/e/Developer/Masm32/BIN:/mnt/e/Program Files (x86)/vcpkg:/mnt/d/APPpro/Visual Studio/vs2019/VC/Tools/MSVC/14.29.30037/bin/Hostx64/x64:/mnt/d/APPpro/Typora/Typora/:/mnt/e/Developer/微信web开发者工具/dll:/mnt/e/Developer/Python:/mnt/e/Developer/Node/:/mnt/e/Developer/Python/Scripts:/mnt/c/Program Files/dotnet/:/mnt/e/Developer/golang/bin:/mnt/c/Users/86173/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files/Bandizip/:/mnt/d/APPpro/TexLive/texlive/2019/bin/win32:/mnt/d/APPpro/Git for windows/Git/usr/bin:/mnt/c/Users/86173/AppData/Roaming/npm:/mnt/c/Users/86173/AppData/Local/Pandoc/:/mnt/e/Program Files/Minecraft Chunky/oidn-1.4.2.x64.vc14.windows/bin:/mnt/c/Users/86173/go/bin:/mnt/e/Developer/make/bin:/mnt/e/litunan/QQGameTempest/Hall.57734/:/mnt/d/APPpro/VSCODE/Microsoft VS Code/bin:/mnt/e/Developer/cmake/cmake-3.23.1-windows-x86_64/bin:/mnt/e/Developer/mingw-w64/x86_64-8.1.0-release-posix-seh-rt_v6-rev0/mingw64/bin:/usr/local/go/bin
+PATH = /home/ubuntu/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/bin/remote-cli:/home/ubuntu/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/e/Developer/VMwarePro/bin/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/ProgramData/chocolatey/bin:/mnt/d/APPpro/Mingw/mingw32/bin:/mnt/d/APPpro/MatLab/runtime/win64:/mnt/d/APPpro/MatLab/bin:/mnt/d/Repository/Seeds/BShell/bin:/mnt/d/APPpro/CMake/cmake-3.17.0-rc2-win64-x64/bin:/mnt/d/APPpro/MatLab/sys/extern/win64/clang/bin:/mnt/d/APPpro/make/GnuWin32/bin:/mnt/c/Users/86173/AppData/Local/Microsoft/WindowsApps:/mnt/d/APPpro/VSCODE/bin:/mnt/c/Users/86173/AppData/Roaming/npm:/mnt/d/APPpro/TexLive/texlive/2019/bin/win32:/mnt/e/Developer/Alibaba_Dragonwell/jdk8u302-b01/bin:/mnt/e/Developer/Alibaba_Dragonwell/jdk8u302-b01/jre/bin:/mnt/e/Developer/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin:/mnt/d/APPpro/Git for windows/Git/bin:/mnt/c/Program Files (x86)/DOSBox-0.74-3:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/e/Developer/Masm32/BIN:/mnt/e/Program Files (x86)/vcpkg:/mnt/d/APPpro/Visual Studio/vs2019/VC/Tools/MSVC/14.29.30037/bin/Hostx64/x64:/mnt/d/APPpro/Typora/Typora/:/mnt/e/Developer/微信web开发者工具/dll:/mnt/e/Developer/Python:/mnt/e/Developer/Node/:/mnt/e/Developer/Python/Scripts:/mnt/c/Program Files/dotnet/:/mnt/e/Developer/golang/bin:/mnt/c/Users/86173/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files/Bandizip/:/mnt/d/APPpro/TexLive/texlive/2019/bin/win32:/mnt/d/APPpro/Git for windows/Git/usr/bin:/mnt/c/Users/86173/AppData/Roaming/npm:/mnt/c/Users/86173/AppData/Local/Pandoc/:/mnt/e/Program Files/Minecraft Chunky/oidn-1.4.2.x64.vc14.windows/bin:/mnt/c/Users/86173/go/bin:/mnt/e/Developer/make/bin:/mnt/e/litunan/QQGameTempest/Hall.57734/:/mnt/d/APPpro/VSCODE/Microsoft VS Code/bin:/mnt/e/Developer/cmake/cmake-3.23.1-windows-x86_64/bin:/mnt/e/Developer/mingw-w64/x86_64-8.1.0-release-posix-seh-rt_v6-rev0/mingw64/bin:/usr/local/go/bin
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
@@ -63,7 +63,7 @@ VSCODE_PIPE_LOGGING = true
 # environment
 PWD = /home/ubuntu/Embeded-System-Lab
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-d3f80c13-b695-449a-bcf0-b78a5f369ed1.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-44490028-44c5-48cd-80f3-c420f01b679f.sock
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -217,7 +217,7 @@ GNUmakefile:
 # strcache performance: lookups = 18 / hit rate = 16%
 # hash-table stats:
 # Load=15/8192=0%, Rehash=0, Collisions=1/18=6%
-# Finished Make data base on Wed May 18 13:39:14 2022
+# Finished Make data base on Thu May 26 11:29:38 2022
 
  
 make: *** No rule to make target 'all'.  Stop.

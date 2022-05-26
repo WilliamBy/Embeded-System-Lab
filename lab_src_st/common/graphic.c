@@ -422,3 +422,36 @@ void fb_draw_thick_line(int x1, int y1, int x2, int y2, int r, int color)
 		fb_draw_round(x1, y1, r, color);
 	}
 }
+
+fb_image* zoomin_image(fb_image *img, int level)
+{
+	if (img == NULL)
+	{
+		return NULL;
+	}
+	if (img->pixel_h * level < SCREEN_HEIGHT * 3 || img->pixel_w * level < SCREEN_WIDTH * 3)
+	{
+		return NULL;
+	}
+	int old_h = img->pixel_h, old_w = img->pixel_w, old_lb = img->line_byte, new_lb = old_lb * 2;
+	fb_image* new_img = fb_new_image(img->color_type, old_w * 2, old_h * 2, new_lb);
+	if (new_img == NULL)
+	{
+		exit(-1);
+	}
+	int32_t *old = (int32_t*)img->content;
+	int32_t *new = (int32_t*)new_img->content;
+	int32_t *old_ptr, *new_ptr;
+	for (int row = 0; row < old_h; row++)
+	{
+		old_ptr = old + (row * old_w);
+		new_ptr = new + (2 * row * new_img->pixel_w);
+		for (int col = 0; col < old_w; col++)
+		{
+			*(new_ptr++) = *old_ptr;
+			*(new_ptr++) = *(old_ptr++);
+		}	// 横向x2
+		memcpy(new_ptr, new_ptr - new_img->pixel_w, new_lb);	// 纵向x2
+	}
+	return new_img;
+}
