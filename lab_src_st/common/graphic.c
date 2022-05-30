@@ -150,16 +150,24 @@ void fb_draw_rect(int x, int y, int w, int h, int color)
 	if(y < 0) { h += y; y = 0;}
 	if(y+h >SCREEN_HEIGHT) { h = SCREEN_HEIGHT-y;}
 	if(w<=0 || h<=0) return;
-	int *buf = _begin_draw(x,y,w,h);
-/*---------------------------------------------------*/
+	int32_t *buf = _begin_draw(x,y,w,h);
+	/*---------------------------------------------------*/
 	// printf("you need implement fb_draw_rect()\n"); exit(0);
 	// Add your code here
-	for (int yy = 0; yy < h; yy++)
+	int32_t *rect_start = buf + x + y * SCREEN_WIDTH;
+	int32_t *line_start = rect_start;
+	if (h > 0)
 	{
 		for (int xx = 0; xx < w; xx++)
 		{
-			*(buf + (y + yy) * SCREEN_WIDTH + (x + xx)) = color;
+			line_start[xx] = color;
 		}
+	}
+	line_start += SCREEN_WIDTH;
+	for (int yy = 1; yy < h; yy++)
+	{
+		memcpy(line_start, rect_start, sizeof(int32_t) * w);
+		line_start += SCREEN_WIDTH;
 	}
 	/*---------------------------------------------------*/
 	return;
@@ -441,10 +449,6 @@ fb_image* zoomin_image(const fb_image *img)
 	{
 		return NULL;
 	}
-	// if (img->pixel_h < SCREEN_HEIGHT * 3 || img->pixel_w < SCREEN_WIDTH * 3)
-	// {
-	// 	return fb_copy_image(img);
-	// }
 	int old_h = img->pixel_h, old_w = img->pixel_w, old_lb = img->line_byte, new_lb = old_lb * 2;
 	fb_image* new_img = fb_new_image(img->color_type, old_w * 2, old_h * 2, new_lb);
 	if (new_img == NULL)
@@ -474,10 +478,6 @@ fb_image *zoomout_image(const fb_image *img)
 	{
 		return NULL;
 	}
-	// if (img->pixel_h < SCREEN_HEIGHT / 5 || img->pixel_w < SCREEN_WIDTH / 5)
-	// {
-	// 	return fb_copy_image(img);
-	// }
 	int old_h = img->pixel_h, old_w = img->pixel_w, old_lb = img->line_byte, new_lb = old_lb / 2;
 	fb_image *new_img = fb_new_image(img->color_type, old_w / 2, old_h / 2, (old_w / 2) * 4);
 	if (new_img == NULL)
