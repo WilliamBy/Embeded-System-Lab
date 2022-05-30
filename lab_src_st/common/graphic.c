@@ -423,13 +423,13 @@ void fb_draw_thick_line(int x1, int y1, int x2, int y2, int r, int color)
 	}
 }
 
-fb_image* zoomin_image(fb_image *img, int level)
+fb_image* zoomin_image(fb_image *img)
 {
 	if (img == NULL)
 	{
 		return NULL;
 	}
-	if (img->pixel_h * level < SCREEN_HEIGHT * 3 || img->pixel_w * level < SCREEN_WIDTH * 3)
+	if (img->pixel_h < SCREEN_HEIGHT * 3 || img->pixel_w < SCREEN_WIDTH * 3)
 	{
 		return NULL;
 	}
@@ -454,4 +454,55 @@ fb_image* zoomin_image(fb_image *img, int level)
 		memcpy(new_ptr, new_ptr - new_img->pixel_w, new_lb);	// 纵向x2
 	}
 	return new_img;
+}
+
+fb_image *zoomout_image(fb_image *img)
+{
+	if (img == NULL)
+	{
+		return NULL;
+	}
+	if (img->pixel_h < SCREEN_HEIGHT / 5 || img->pixel_w < SCREEN_WIDTH / 5)
+	{
+		return NULL;
+	}
+	int old_h = img->pixel_h, old_w = img->pixel_w, old_lb = img->line_byte, new_lb = old_lb / 2;
+	fb_image *new_img = fb_new_image(img->color_type, old_w / 2, old_h / 2, (old_w / 2) * 4);
+	if (new_img == NULL)
+	{
+		exit(-1);
+	}
+	int32_t *old = (int32_t *)img->content;
+	int32_t *new = (int32_t *)new_img->content;
+	int32_t *old_ptr, *new_ptr;
+	for (int row = 0; row < new_img->pixel_h; row++)
+	{
+		old_ptr = old + (2 * row * old_w);
+		new_ptr = new + (row * new_img->pixel_w);
+		for (int col = 0; col < new_img->pixel_w; col++)
+		{
+			*(new_ptr++) = *old_ptr;
+			old_ptr += 2;
+		}
+	}
+	return new_img;
+}
+
+fb_image* zoom_image(fb_image *img, int level)
+{
+	fb_image *new_img;
+	if (level < 0)
+	{
+		for (int i = level; i < 0; i++)
+		{
+			new_img = zoomout_image(img);
+		}
+	}
+	else
+	{
+		for (int i = level; i < 0; i++)
+		{
+			new_img = zoomout_image(img);
+		}
+	}
 }
