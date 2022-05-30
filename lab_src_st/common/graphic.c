@@ -219,16 +219,18 @@ void fb_draw_image(int x, int y, fb_image *image, int color)
 
 	int alpha;
 	int ww;
+	int screen_line_bytes = SCREEN_WIDTH * 4, image_line_bytes = image->line_byte;
 
 	if(image->color_type == FB_COLOR_RGB_8880) /*lab3: jpg*/
 	{
 		// printf("you need implement fb_draw_image() FB_COLOR_RGB_8880\n"); exit(0);
 		// Add your code here
+		int w_bytes = w * 4;
 		for (ww = 0; ww < h; ++ww)
 		{
-			memcpy(dst, src, w * 4);
-			dst += SCREEN_WIDTH * 4;
-			src += image->line_byte;
+			memcpy(dst, src, w_bytes);
+			dst += screen_line_bytes;
+			src += image_line_bytes;
 		}
 		return;
 	}
@@ -238,14 +240,15 @@ void fb_draw_image(int x, int y, fb_image *image, int color)
 		// printf("you need implement fb_draw_image() FB_COLOR_RGBA_8888\n"); exit(0);
 		// Add your code here
 		char R1, G1, B1, alpha;
-		char *from = src;
-		char *p = dst;
-		for (int i = 0; i < w; i++)
+		char *from, *p;
+		int32_t *src_start = (int32_t *)src;
+		int32_t *dst_start = (int32_t *)dst;
+		for (int i = 0; i < h; i++)
 		{
-			for (int j = 0; j < h; j++)
+			for (int j = 0; j < w; j++)
 			{
-				p = dst + j * SCREEN_WIDTH * 4 + i * 4;
-				from = src + j * image->line_byte + i * 4;
+				p = (char*)(dst_start + j);
+				from = (char*)(src_start + j);
 				alpha = from[3];
 				B1 = from[0];
 				G1 = from[1];
@@ -265,6 +268,8 @@ void fb_draw_image(int x, int y, fb_image *image, int color)
 					p[2] += (((R1 - p[2]) * alpha) >> 8);
 				}
 			}
+			src_start += image->pixel_w;
+			dst_start += SCREEN_WIDTH;
 		}
 		return;
 	}
@@ -273,17 +278,15 @@ void fb_draw_image(int x, int y, fb_image *image, int color)
 	{
 		// printf("you need implement fb_draw_image() FB_COLOR_ALPHA_8\n"); exit(0);
 		// Add your code here
-		int line_bytes = image->line_byte;
-		char R1, G1, B1, alpha;
-		char *from = src;
-		char *p = dst;
-		for (int i = 0; i < w; i++)
+		char R1, G1, B1, alpha, *p;
+		char *src_start = src;
+		int32_t *dst_start = (int32_t *)dst;
+		for (int i = 0; i < h; i++)
 		{
-			for (int j = 0; j < h; j++)
+			for (int j = 0; j < w; j++)
 			{
-				p = dst + j * SCREEN_WIDTH * 4 + i * 4;
-				from = src + j * line_bytes + i;
-				alpha = *from;
+				p = (char*)(dst_start + j);
+				alpha = src_start[j];
 				R1 = (color & 0xff0000) >> 16;
 				G1 = (color & 0xff00) >> 8;
 				B1 = (color & 0xff);
@@ -302,6 +305,8 @@ void fb_draw_image(int x, int y, fb_image *image, int color)
 					p[2] += (((R1 - p[2]) * alpha) >> 8);
 				}
 			}
+			src_start += image->pixel_w;
+			dst_start += SCREEN_WIDTH;
 		}
 		return;
 	}
