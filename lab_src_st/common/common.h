@@ -110,6 +110,7 @@ int touch_read(int touch_fd, int *x, int *y, int *finger);
 #endif /* _COMMON_H_ */
 
 /*com-lab*/
-fb_image* zoomin_image(fb_image *img, int level);
-fb_image* zoomout_image(fb_image *img, int level);
-fb_image* zoom_image(fb_image *img, int level);
+fb_image* zoomin_image(const fb_image *img);
+fb_image* zoomout_image(const fb_image *img);
+fb_image* zoom_image(const fb_image *img, int level);
+fb_image* fb_copy_image(const fb_image *img);

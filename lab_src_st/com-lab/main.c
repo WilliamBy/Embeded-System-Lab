@@ -81,17 +81,6 @@ fb_image *fb_read_image(char *file, enum image_type type)
         return NULL;
     }
 }
-fb_image *fb_copy_image(fb_image *src)
-{
-    fb_image *img = (fb_image *)malloc(sizeof(fb_image));
-    img->color_type = src->color_type;
-    img->line_byte = src->line_byte;
-    img->pixel_h = src->pixel_h;
-    img->pixel_w = src->pixel_w;
-    img->content = (char *)malloc(src->pixel_h * src->line_byte);
-    memcpy(img->content, src->content, src->pixel_h * src->line_byte);
-    return img;
-}
 static void touch_event_cb(int fd)
 {
     int type, x, y, finger;
@@ -102,12 +91,7 @@ static void touch_event_cb(int fd)
     case TOUCH_PRESS:
         if (IN_SQUARE(x, y, PLUS_X, MARGIN, ICON_SIZE)) // 放大
         {
-            if (scale_level < 0)
-            {
-                scale_level++;
-                
-            }
-            if ((new_img = zoomin_image(show_img)) != NULL)
+            if ((new_img = zoom_image(src_img, ++scale_level)) != NULL)
             {
                 fb_free_image(show_img);
                 show_img = new_img;
@@ -118,7 +102,7 @@ static void touch_event_cb(int fd)
         }
         else if (IN_SQUARE(x, y, MINUS_X, MARGIN, ICON_SIZE)) // 缩小
         {
-            if ((new_img = zoomout_image(show_img)) != NULL)
+            if ((new_img = zoom_image(src_img, --scale_level)) != NULL)
             {
                 fb_free_image(show_img);
                 show_img = new_img;
@@ -126,20 +110,13 @@ static void touch_event_cb(int fd)
                 fb_draw_image(loc_x, loc_y, show_img, 0);
                 draw_ui();
             }
-            scale_level--;
         }
         else if (IN_SQUARE(x, y, RESET_X, MARGIN, ICON_SIZE)) // 重置图片大小
         {
             loc_x = 0;
             loc_y = BAR_H;
             fb_free_image(show_img);
-            if ((show_img = fb_read_image(filepath, img_type)) == NULL)
-            {
-                fprintf(stderr, "cannot find png image: ");
-                fprintf(stderr, filepath);
-                fprintf(stderr, "\n");
-                exit(1);
-            }
+            show_img = fb_copy_image(src_img);
             clear_draw();
             fb_draw_image(loc_x, loc_y, show_img, 0);
             draw_ui();
@@ -203,13 +180,14 @@ int main(int argc, char *argv[])
         fprintf(stderr, "\n");
         exit(1);
     }
-    if ((show_img = fb_read_image(filepath, img_type)) == NULL)
+    if ((src_img = fb_read_image(filepath, img_type)) == NULL)
     {
         fprintf(stderr, "cannot find image: ");
         fprintf(stderr, filepath);
         fprintf(stderr, "\n");
         exit(1);
     }
+    show_img = fb_copy_image(src_img);
     fb_init("/dev/fb0");
     font_init("/home/pi/font.ttc");
     plus_img = fb_read_png_image("/home/pi/plus40.png");

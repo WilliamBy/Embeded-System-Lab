@@ -423,16 +423,28 @@ void fb_draw_thick_line(int x1, int y1, int x2, int y2, int r, int color)
 	}
 }
 
-fb_image* zoomin_image(fb_image *img)
+fb_image *fb_copy_image(const fb_image *src)
+{
+	fb_image *img = (fb_image *)malloc(sizeof(fb_image));
+	img->color_type = src->color_type;
+	img->line_byte = src->line_byte;
+	img->pixel_h = src->pixel_h;
+	img->pixel_w = src->pixel_w;
+	img->content = (char *)malloc(src->pixel_h * src->line_byte);
+	memcpy(img->content, src->content, src->pixel_h * src->line_byte);
+	return img;
+}
+
+fb_image* zoomin_image(const fb_image *img)
 {
 	if (img == NULL)
 	{
 		return NULL;
 	}
-	if (img->pixel_h < SCREEN_HEIGHT * 3 || img->pixel_w < SCREEN_WIDTH * 3)
-	{
-		return NULL;
-	}
+	// if (img->pixel_h < SCREEN_HEIGHT * 3 || img->pixel_w < SCREEN_WIDTH * 3)
+	// {
+	// 	return fb_copy_image(img);
+	// }
 	int old_h = img->pixel_h, old_w = img->pixel_w, old_lb = img->line_byte, new_lb = old_lb * 2;
 	fb_image* new_img = fb_new_image(img->color_type, old_w * 2, old_h * 2, new_lb);
 	if (new_img == NULL)
@@ -456,16 +468,16 @@ fb_image* zoomin_image(fb_image *img)
 	return new_img;
 }
 
-fb_image *zoomout_image(fb_image *img)
+fb_image *zoomout_image(const fb_image *img)
 {
 	if (img == NULL)
 	{
 		return NULL;
 	}
-	if (img->pixel_h < SCREEN_HEIGHT / 5 || img->pixel_w < SCREEN_WIDTH / 5)
-	{
-		return NULL;
-	}
+	// if (img->pixel_h < SCREEN_HEIGHT / 5 || img->pixel_w < SCREEN_WIDTH / 5)
+	// {
+	// 	return fb_copy_image(img);
+	// }
 	int old_h = img->pixel_h, old_w = img->pixel_w, old_lb = img->line_byte, new_lb = old_lb / 2;
 	fb_image *new_img = fb_new_image(img->color_type, old_w / 2, old_h / 2, (old_w / 2) * 4);
 	if (new_img == NULL)
@@ -488,21 +500,35 @@ fb_image *zoomout_image(fb_image *img)
 	return new_img;
 }
 
-fb_image* zoom_image(fb_image *img, int level)
+fb_image* zoom_image(const fb_image *img, int level)
 {
-	fb_image *new_img;
+	if (img == NULL)
+	{
+		return NULL;
+	}
+	if (level == 0)
+	{
+		return fb_copy_image(img);
+	}
+	fb_image *new_img = NULL;
+	fb_image *old_img = fb_copy_image(img);
 	if (level < 0)
 	{
 		for (int i = level; i < 0; i++)
 		{
-			new_img = zoomout_image(img);
+			new_img = zoomout_image(old_img);
+			fb_free_image(old_img);
+			old_img = new_img;
 		}
 	}
 	else
 	{
-		for (int i = level; i < 0; i++)
+		for (int i = level; i > 0; i--)
 		{
-			new_img = zoomout_image(img);
+			new_img = zoomin_image(old_img);
+			fb_free_image(old_img);
+			old_img = new_img;
 		}
 	}
+	return new_img;
 }
