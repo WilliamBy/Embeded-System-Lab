@@ -85,6 +85,10 @@ static void touch_event_cb(int fd)
 {
     int type, x, y, finger;
     type = touch_read(fd, &x, &y, &finger);
+    if (finger != 0)
+    {
+        return;
+    }
     fb_image *new_img = NULL;
     switch (type)
     {

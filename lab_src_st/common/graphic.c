@@ -178,16 +178,20 @@ void fb_draw_line(int x1, int y1, int x2, int y2, int color)
 /*---------------------------------------------------*/
 	// printf("you need implement fb_draw_line()\n"); exit(0);
 	// Add your code here
+	int x = x1 < x2 ? x1 : x2;
+	int y = y1 < y2 ? y1 : y2;
 	// Bresenha 算法
 	int dx = abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
     int dy = abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
     int err = (dx > dy ? dx : -dy) / 2;
+	int *buf = _begin_draw(x, y, dx, dy);
 
-    while (fb_draw_pixel(x1, y1, color), x1 != x2 || y1 != y2) {
-        int e2 = err;
+	while (*(buf + y1 * SCREEN_WIDTH + x1) = color, x1 != x2 || y1 != y2)
+	{
+		int e2 = err;
         if (e2 > -dx) { err -= dy; x1 += sx; }
         if (e2 <  dy) { err += dx; y1 += sy; }
-    }
+	}
 /*---------------------------------------------------*/
 	return;
 }
